@@ -1,10 +1,17 @@
 use reqwest;
-use std::env;
+use serde::{Deserialize, Serialize};
+use std::{env, str::FromStr};
+
 // add extra function for handleing optional input POST/GET
 fn main() {
     println!("enter a url to fetch");
     let mut args: Vec<String> = env::args().collect();
     args.remove(0);
+    let slit: Vec<&str> = args[2].split(":").collect();
+    let jsn = format!(r#"{{"{}": "{}"}}"#, slit[0], slit[1]);
+
+    println!("{:?}", jsn);
+
     //checks for get keyword in os args if matched run the corisponding function
     if args[0] == "get" {
         let res = fetch_get(args[1].as_str());
