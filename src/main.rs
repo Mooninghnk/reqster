@@ -19,6 +19,7 @@ struct Args {
     count: u8,
 }
 
+#[tokio::main]
 fn main() {
     let args = Args::parse();
 
@@ -34,13 +35,12 @@ fn main() {
         }
     }
 }
-#[tokio::main]
+
 async fn get_req(url: &str) -> Result<String, reqwest::Error> {
     let body = reqwest::get(url).await?.text().await?;
     Ok(body)
 }
 
-#[tokio::main]
 async fn get_post(url: &str, json: String) {
     let spl: Vec<&str> = json.split(":").collect();
     let json_data = format!(r#"{{"{}": "{}"}}"#, spl[0], spl[1]);
